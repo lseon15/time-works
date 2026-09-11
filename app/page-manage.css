@@ -1,0 +1,65 @@
+/* 관리 페이지 — 왼쪽: 목록 컷들 / 오른쪽: 고른 항목 편집 컷 */
+.mg { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(300px, 1fr); gap: var(--gap); align-items: start; }
+.mg-left .cut + .cut { margin-top: var(--gap); }
+.mg-box { padding: 12px 14px 12px; }
+.mg-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.mg-title h2 { font-size: 13px; margin: 0; }
+.mg-add { padding: 4px 10px; font-size: 12px; }
+
+.mg-list { border-top: var(--hair) solid var(--ink); }
+.mg-row { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-bottom: 1px solid #0000001a; cursor: pointer; outline-offset: -2px; }
+.mg-row:hover { background: #0000000d; }
+.mg-row .sw { width: 12px; height: 12px; flex: none; }
+.mg-row .nm { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mg-row.top .nm { font-weight: 800; }
+.mg-row .ly, .mg-row .ct { font-size: 11px; font-style: italic; color: var(--muted); flex: none; }
+.mg-row .no { font-family: var(--serif); font-weight: 800; width: 18px; text-align: right; flex: none; }
+.mg-row .badge { font-size: 10.5px; font-weight: 700; border: 1.5px solid currentColor; padding: 0 5px; flex: none; }
+.mg-row.dim .nm { color: #00000066; }
+.mg-row[aria-selected="true"] { background: var(--ink); color: var(--white); }
+.mg-row[aria-selected="true"] .ly, .mg-row[aria-selected="true"] .ct { color: #FFFFFFAA; }
+.mg-row[aria-selected="true"].dim .nm { color: #FFFFFFAA; }
+.mg-row[aria-selected="true"] .fill { border-color: var(--white); }
+
+/* 편집 컷 */
+.mg-edit { position: sticky; top: 12px; padding: 14px 16px 16px; }
+.mg-edit .kind { font-style: italic; font-weight: 700; font-size: 12px; }
+.mg-edit .path { font-size: 11.5px; font-weight: 600; margin-top: 2px; color: var(--muted); overflow-wrap: anywhere; }
+.mg-edit .big { font-size: 22px; font-weight: 800; margin: 2px 0 12px; overflow-wrap: anywhere; }
+.mg-f { margin-top: 12px; }
+.mg-f > label, .mg-f > .lb { display: block; font-size: 11.5px; font-weight: 700; margin-bottom: 5px; }
+.mg-f select { font: inherit; width: 100%; border: 2px solid var(--ink); border-radius: 0; background: var(--white); padding: 6px 8px; color: var(--ink); }
+.mg-f .note { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.pal { display: flex; flex-wrap: wrap; gap: 6px; }
+.pal button { width: 26px; height: 26px; padding: 0; cursor: pointer; border-width: 2px; }
+.pal button[aria-pressed="true"] { outline: 2.5px solid var(--signal); outline-offset: 2px; }
+.pal .inherit { width: auto; padding: 0 8px; font: inherit; font-size: 11.5px; font-weight: 700; background: var(--white); border: 2px dashed var(--ink); color: var(--ink); }
+.mg-row2 { display: flex; gap: 6px; flex-wrap: wrap; }
+.mg-row2 .btn { padding: 5px 10px; font-size: 12px; }
+.mg-stat { font-weight: 700; }
+.mg-stat .display { font-size: 22px; margin-right: 4px; }
+.mg-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: var(--hair) solid var(--ink); }
+.mg-actions .btn { padding: 6px 10px; font-size: 12px; }
+.btn.danger[data-armed="true"] { background: var(--signal); color: var(--ink); }
+.mg-users { font-size: 12px; line-height: 1.6; }
+.mg-empty { color: var(--muted); font-weight: 600; padding: 18px 2px; }
+.mg-err { margin-top: 10px; color: var(--signal); font-weight: 700; font-size: 12px; }
+.mg-err:empty { display: none; }
+
+/* 설정 */
+.mg-set { border-top: var(--hair) solid var(--ink); padding-top: 10px; display: grid; gap: 12px; }
+.mg-set .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.mg-set .lb { font-weight: 700; }
+.mg-set select { font: inherit; border: 2px solid var(--ink); border-radius: 0; background: var(--white); padding: 5px 8px; }
+.mg-set .note { font-size: 11px; color: var(--muted); margin-top: -6px; }
+.mg-set .seg .btn { padding: 4px 10px; font-size: 12px; }
+
+/* 동기화 */
+.mg-sync-form { display: grid; gap: 8px; }
+.mg-sync-form label { display: grid; gap: 4px; font-size: 11.5px; font-weight: 700; }
+.mg-sync-form .field { font-weight: 400; }
+.mg-sync-on { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.mg-sync-on .who { font-weight: 800; overflow-wrap: anywhere; }
+.mg-sync-on .when { font-size: 12px; font-weight: 700; white-space: nowrap; }
+.mg-sync-on .when.busy { color: var(--signal); }
+.mg-sync-err { font-size: 12px; font-weight: 700; color: var(--signal); overflow-wrap: anywhere; }

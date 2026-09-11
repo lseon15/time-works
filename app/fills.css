@@ -1,0 +1,11 @@
+/* 칠: 3색만 쓰니까 구분은 스크린톤(빗금·망점)으로 한다. 칠한 면은 항상 먹선으로 두른다. */
+.fill { border: 1.5px solid var(--ink); }
+.fill-orange       { background: var(--signal); }
+.fill-ink          { background: var(--ink); }
+.fill-paper        { background: var(--white); }
+.fill-orange-hatch { background: repeating-linear-gradient(135deg, var(--ink) 0 1.4px, var(--signal) 1.4px 6px); }
+.fill-paper-hatch  { background: repeating-linear-gradient(135deg, var(--ink) 0 1.4px, var(--white) 1.4px 6px); }
+.fill-paper-dots   { background: radial-gradient(circle, var(--ink) 1.1px, transparent 1.4px) 0 0 / 6px 6px, var(--white); }
+.fill-orange-dots  { background: radial-gradient(circle, var(--ink) 1.1px, transparent 1.4px) 0 0 / 6px 6px, var(--signal); }
+.fill-ink-dots     { background: radial-gradient(circle, var(--white) 1.1px, transparent 1.4px) 0 0 / 6px 6px, var(--ink); }
+.ink .fill { border-color: var(--white); }

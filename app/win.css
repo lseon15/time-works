@@ -1,0 +1,10 @@
+/* 통계 창 공통 — 머리(워드마크 + 페이지 전환) */
+body { padding: 22px 40px 40px; }
+.wrap { max-width: 1000px; margin: 0 auto; }
+.head { text-align: center; margin-bottom: 18px; }
+.head .rule .seg { flex: none; }
+.head .display { font-size: 56px; margin: 12px 0 0; }
+.seg { display: inline-flex; }
+.seg .btn + .btn { border-left: 0; }
+.seg .btn[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+.page[hidden] { display: none; }

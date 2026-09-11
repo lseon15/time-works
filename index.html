@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#EEEEEE">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Time Works</title>
+<link rel="stylesheet" href="app/base.css">
+<link rel="stylesheet" href="app/fills.css">
+<link rel="stylesheet" href="app/panel.css">
+<link rel="stylesheet" href="app/win.css">
+<link rel="stylesheet" href="app/page-stats.css">
+<link rel="stylesheet" href="app/page-manage.css">
+<link rel="stylesheet" href="app/page-records.css">
+<link rel="stylesheet" href="app/mobile.css">
+</head>
+<!-- 폰(PWA) 화면 틀. 빌드(npm run web)가 panel.html·stats.html 의 본문을 여기에 끼워 index.html 을 만든다 -->
+<body class="m">
+<main class="tw-timer" id="tab-timer">
+<header class="head">
+    <div class="rule" id="today-label">오늘</div>
+    <div class="display" id="today-total" aria-label="오늘 합계">0:00</div>
+  </header>
+
+  <section class="cut now idle" id="now" aria-live="polite"></section>
+
+  <section class="cut pick">
+    <input class="field search" id="search" placeholder="분류 검색" autocomplete="off" spellcheck="false" aria-label="분류 검색">
+    <div class="list" id="list" role="listbox" aria-label="분류"></div>
+    <div class="chips" id="chips" role="group" aria-label="작업 유형"></div>
+    <button class="btn go start" id="start">시작</button>
+  </section>
+
+  <footer class="foot">
+    <span class="nav-btns"><button class="btn" id="open-stats">통계</button><button class="btn" id="open-records">기록</button><button class="btn" id="open-manage">관리</button></span>
+    <span class="err" id="p-err" role="alert"></span>
+    <span class="key" title="어느 앱에서든 ⌃⌥T 로 패널 열고 닫기">⌃⌥T</span>
+  </footer>
+</main>
+<div id="tab-rest" hidden>
+<div class="wrap">
+  <header class="head">
+    <div class="rule">
+      <div class="seg" role="tablist" aria-label="페이지">
+        <button class="btn" role="tab" data-page="stats">통계</button>
+        <button class="btn" role="tab" data-page="records">기록</button>
+        <button class="btn" role="tab" data-page="manage">관리</button>
+      </div>
+    </div>
+    <div class="display">Time Works</div>
+  </header>
+
+  <!-- 통계 -->
+  <main class="page" id="page-stats" hidden>
+    <div class="bar">
+      <div class="seg" id="kind" role="group" aria-label="기간">
+        <button class="btn" data-kind="day">오늘</button>
+        <button class="btn" data-kind="week">주간</button>
+        <button class="btn" data-kind="month">월간</button>
+      </div>
+      <div class="nav">
+        <button class="btn" id="prev" aria-label="이전 기간">‹</button>
+        <span class="meta label" id="range"></span>
+        <button class="btn" id="next" aria-label="다음 기간">›</button>
+        <button class="btn" id="now-btn">이번</button>
+      </div>
+    </div>
+    <section class="cut ink sum" id="sum"></section>
+    <section class="cut tree">
+      <div class="top-line">
+        <h2>분류별</h2>
+        <div class="ctrls">
+          <div class="seg sort" id="sort" role="group" aria-label="정렬">
+            <button class="btn" data-sort="tree">분류순</button>
+            <button class="btn" data-sort="time">시간순</button>
+          </div>
+          <div class="layers" id="layers" role="group" aria-label="표시할 레이어"></div>
+        </div>
+      </div>
+      <table id="tree"></table>
+    </section>
+    <section class="cut ink types"><h2>작업 유형별</h2><div class="list" id="types"></div></section>
+    <section class="cut cross">
+      <div class="top-line"><h2>분류 × 작업 유형</h2><span class="meta">위 '분류별'의 정렬·레이어 설정을 따라요. 비율은 기간 전체 대비</span></div>
+      <div class="cross-wrap"><table id="cross"></table></div>
+    </section>
+  </main>
+
+  <!-- 기록 -->
+  <main class="page" id="page-records" hidden>
+    <div class="bar">
+      <div class="rc-nav">
+        <button class="btn" id="rc-prev" aria-label="전날">‹</button>
+        <input type="date" class="field rc-date" id="rc-date" aria-label="날짜">
+        <button class="btn" id="rc-next" aria-label="다음 날">›</button>
+        <button class="btn" id="rc-today">오늘</button>
+      </div>
+      <button class="btn go" id="rc-add">기록 추가</button>
+    </div>
+    <section class="cut ink rc-day" id="rc-day"></section>
+    <div class="rc-grid">
+      <section class="cut rc-list" id="rc-list" role="listbox" aria-label="기록"></section>
+      <aside class="cut rc-edit" id="rc-edit" aria-live="polite"></aside>
+    </div>
+  </main>
+
+  <!-- 관리 -->
+  <main class="page mg" id="page-manage" hidden>
+    <div class="mg-left">
+      <section class="cut mg-box">
+        <div class="mg-title"><h2>분류</h2><button class="btn mg-add" id="add-top">최상위 분류 추가</button></div>
+        <div class="mg-list" id="mg-cats" role="listbox" aria-label="분류"></div>
+      </section>
+      <section class="cut mg-box">
+        <div class="mg-title"><h2>작업 유형</h2><button class="btn mg-add" id="add-wt">작업 유형 추가</button></div>
+        <div class="mg-list" id="mg-wts" role="listbox" aria-label="작업 유형"></div>
+      </section>
+      <section class="cut mg-box">
+        <div class="mg-title"><h2>레이어</h2><button class="btn mg-add" id="add-layer">맨 뒤에 레이어 추가</button></div>
+        <div class="mg-list" id="mg-layers" role="listbox" aria-label="레이어"></div>
+      </section>
+      <section class="cut mg-box">
+        <div class="mg-title"><h2>동기화</h2></div>
+        <div class="mg-set" id="mg-sync"></div>
+      </section>
+      <section class="cut mg-box">
+        <div class="mg-title"><h2>설정</h2></div>
+        <div class="mg-set" id="mg-set"></div>
+      </section>
+    </div>
+    <aside class="cut mg-edit" id="mg-edit" aria-live="polite"></aside>
+  </main>
+
+  <div class="err" id="err" role="alert"></div>
+</div>
+</div>
+<nav class="tabbar" id="tabbar" aria-label="화면">
+  <button data-tab="timer" aria-pressed="true">타이머</button>
+  <button data-tab="records">기록</button>
+  <button data-tab="stats">통계</button>
+  <button data-tab="manage">관리</button>
+</nav>
+<script type="module" src="app/mobile.js"></script>
+</body>
+</html>

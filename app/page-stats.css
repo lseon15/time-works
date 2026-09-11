@@ -1,0 +1,101 @@
+/* 통계 페이지 */
+.bar { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.nav { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; }
+.nav .btn { padding: 5px 11px; font-size: 15px; line-height: 1; }
+.nav .label { min-width: 190px; text-align: center; }
+
+/* 1컷: 먹 — 기간 합계 + 최상위 분류 비율. 큰 숫자만 주황 */
+.sum { padding: 18px 22px 22px; position: relative; }
+.sum .meta { position: absolute; top: 12px; right: 16px; }
+.sum .meta.live { background: var(--signal); color: var(--ink); padding: 2px 8px; font-style: italic; }
+.sum .display { font-size: 76px; color: var(--signal); }
+.sum .unit { font-weight: 700; margin-left: 4px; }
+.stack { display: flex; height: 30px; margin-top: 16px; border: var(--line) solid var(--white); background: var(--ink); }
+.stack > span { border: 0; border-right: var(--line) solid var(--white); }
+.stack > span:last-child { border-right: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-weight: 700; }
+.legend .sw { display: inline-block; width: 14px; height: 14px; vertical-align: -2px; margin-right: 6px; }
+.empty { margin-top: 12px; font-weight: 600; }
+
+/* 2컷: 흰 — 분류 트리 표 */
+.tree { padding: 14px 18px 18px; }
+.tree h2, .types h2 { font-size: 13px; margin: 0; }
+.tree .top-line { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.layers { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.layers .cap { font-size: 11.5px; font-weight: 700; font-style: italic; margin-right: 4px; }
+.tog { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 12px; border: 2px solid var(--ink); padding: 3px 9px 3px 6px; cursor: pointer; background: var(--white); }
+.tog input { appearance: none; -webkit-appearance: none; width: 13px; height: 13px; margin: 0; border: 2px solid var(--ink); background: var(--white); display: grid; place-content: center; cursor: pointer; }
+.tog input:checked { background: var(--ink); }
+.tog input:checked::after { content: ""; width: 5px; height: 8px; border: solid var(--white); border-width: 0 2px 2px 0; transform: translateY(-1px) rotate(45deg); }
+.tog:has(input:checked) { background: var(--ink); color: var(--white); }
+.tog:has(input:checked) input { border-color: var(--white); }
+.tog:has(input:focus-visible) { outline: 2.5px solid var(--signal); outline-offset: 2px; }
+.types h2 { margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-size: 11.5px; font-weight: 700; padding: 0 8px 6px; border-bottom: var(--line) solid var(--ink); }
+th.num, td.num { text-align: right; width: 64px; }
+th.pc, td.pc { text-align: right; width: 52px; }
+td.pc { font-weight: 700; }
+td.ly { width: 58px; font-size: 11px; font-style: italic; color: var(--muted); }
+tr.other td.name { font-style: italic; font-weight: 600; }
+.m.other { border: 1.5px dashed var(--ink); background: transparent; }
+.hint { padding: 14px 8px; font-weight: 600; color: var(--muted); }
+td { padding: 5px 8px; border-bottom: 1px solid #0000001f; vertical-align: middle; }
+tr.top td { font-weight: 800; border-top: var(--hair) solid var(--ink); }
+tr.top:first-child td { border-top: 0; }
+tr.zero td { color: #00000055; }
+td.name .sw { display: inline-block; width: 12px; height: 12px; vertical-align: -1px; margin-right: 7px; }
+td.meter { width: 34%; }
+.m { height: 14px; }
+td.num.total { font-family: var(--serif); font-weight: 800; font-size: 14px; }
+
+/* 3컷: 먹 — 작업 유형 */
+.types { padding: 14px 18px 18px; }
+.types .list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.types .item .n { font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 6px; }
+.types .item .n .sw { width: 12px; height: 12px; }
+.types .item .display { font-size: 30px; margin-top: 6px; }
+.types .item .pc { font-weight: 700; font-size: 12px; margin-left: 5px; }
+.types .item .m { margin-top: 8px; height: 10px; }
+
+/* 정렬 전환 + 시간순 묶음 */
+.tree .ctrls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.sort .btn { padding: 3px 10px; font-size: 12px; }
+tr.sec td { padding: 14px 8px 5px; border-bottom: var(--line) solid var(--ink); font-weight: 800; font-size: 12px; }
+tr.sec:first-child td { padding-top: 2px; }
+tr.sec td .meta { margin-left: 8px; font-weight: 700; color: var(--muted); }
+td.name .rk { display: inline-block; min-width: 22px; font-family: var(--serif); font-weight: 800; }
+td.name .pth { font-size: 11px; font-weight: 500; color: var(--muted); margin-left: 7px; }
+tr.ranked td.name { font-weight: 700; }
+
+/* 날짜별 막대 (주간·월간, 합계 컷 안) */
+.days { display: flex; align-items: flex-end; gap: 4px; height: 170px; margin-top: 18px; padding-top: 4px; border-bottom: var(--line) solid var(--white); }
+.days.month { gap: 2px; }
+.dcol { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; }
+.dval { font-size: 11px; font-weight: 700; text-align: center; margin-bottom: 3px; white-space: nowrap; }
+.dbar { display: flex; flex-direction: column-reverse; min-height: 0; }
+.dbar > span { border: 1.5px solid var(--white); border-bottom-width: 0; }
+.dbar > span:first-child { border-bottom-width: 1.5px; }
+.dlabs { display: flex; gap: 4px; margin-top: 5px; }
+.days.month + .dlabs { gap: 2px; }
+.dlab { flex: 1; min-width: 0; text-align: center; font-size: 11px; font-weight: 700; line-height: 1.25; }
+.dlab.today { color: var(--signal); }
+.dlab.wkend { color: #FFFFFF99; }
+
+/* 교차표 */
+.cross { padding: 14px 18px 18px; }
+.cross .top-line { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.cross h2 { font-size: 13px; margin: 0; }
+.cross .meta { font-size: 11px; color: var(--muted); }
+.cross-wrap { overflow-x: auto; }
+#cross th.wt, #cross td.wt { text-align: right; width: 92px; white-space: nowrap; }
+#cross th.wt .sw { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+#cross td.wt .t { font-family: var(--serif); font-weight: 800; }
+#cross td.wt .p { font-size: 10.5px; color: var(--muted); font-weight: 700; margin-left: 4px; }
+#cross td.sum { text-align: right; width: 62px; font-family: var(--serif); font-weight: 800; }
+#cross td.mix { width: 20%; }
+.mixbar { display: flex; height: 12px; border: 1.5px solid var(--ink); }
+.mixbar > span { border: 0; border-right: 1.5px solid var(--ink); }
+.mixbar > span:last-child { border-right: 0; }
+#cross td.name { white-space: nowrap; max-width: 260px; }
+#cross td.name .pth { display: block; margin-left: 29px; overflow: hidden; text-overflow: ellipsis; }

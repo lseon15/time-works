@@ -1,0 +1,76 @@
+/* 기록 페이지 — 날짜 이동 / 먹 컷: 하루 합계 + 24시간 띠 / 목록 + 편집 */
+.rc-nav { display: inline-flex; align-items: center; gap: 6px; }
+.rc-nav .btn { padding: 5px 11px; }
+.rc-date { width: auto; padding: 5px 8px; font-weight: 700; }
+#rc-add { margin-left: auto; }
+
+.rc-day { padding: 14px 20px 16px; }
+.rc-day .head2 { display: flex; align-items: baseline; gap: 14px; }
+.rc-day .display { font-size: 46px; color: var(--signal); }
+.rc-day .sub { font-weight: 700; }
+.tl { position: relative; margin-top: 14px; border: var(--line) solid var(--white); background: var(--ink); }
+.tl .blk { position: absolute; height: 18px; min-width: 3px; cursor: pointer; border: 1.5px solid var(--white); }
+.tl .blk[aria-selected="true"] { outline: 3px solid var(--signal); outline-offset: 1px; z-index: 2; }
+.tl .now { position: absolute; top: -6px; bottom: -6px; width: 2.5px; background: var(--signal); }
+.tl-ticks { position: relative; height: 16px; margin-top: 4px; font-size: 10.5px; font-weight: 700; }
+.tl-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.tl-ticks span:first-child { transform: none; }
+.tl-ticks span:last-child { transform: translateX(-100%); }
+
+.rc-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(300px, 1fr); gap: var(--gap); align-items: start; margin-top: var(--gap); }
+.rc-list { padding: 6px 0; }
+.rc-row { display: grid; grid-template-columns: 112px 44px minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; padding: 7px 14px; border-bottom: 1px solid #0000001a; cursor: pointer; }
+.rc-row:last-child { border-bottom: 0; }
+.rc-row:hover { background: #0000000d; }
+.rc-row .t { font-family: var(--serif); font-weight: 800; font-variant-numeric: tabular-nums; font-size: 14px; white-space: nowrap; }
+.rc-row .t small { font-family: var(--sans); font-weight: 700; font-size: 10px; display: block; color: var(--muted); }
+.rc-row .d { font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.rc-row .who { min-width: 0; }
+.rc-row .who .nm { font-weight: 800; }
+.rc-row .who .path { font-size: 11px; color: var(--muted); margin-left: 6px; }
+.rc-row .who .memo { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rc-row .sw { display: inline-block; width: 11px; height: 11px; vertical-align: -1px; margin-right: 6px; }
+.rc-row .wt { font-size: 12px; font-weight: 700; white-space: nowrap; text-align: right; }
+.rc-row .badges { grid-column: 3 / 5; display: flex; gap: 5px; flex-wrap: wrap; }
+.rc-row .badges:empty { display: none; }
+.badge { font-size: 10.5px; font-weight: 700; border: 1.5px solid currentColor; padding: 0 5px; }
+.badge.live { background: var(--signal); border-color: var(--ink); color: var(--ink); }
+.badge.warn { border-style: dashed; }
+.rc-row[aria-selected="true"] { background: var(--ink); color: var(--white); }
+.rc-row[aria-selected="true"] .path, .rc-row[aria-selected="true"] .memo, .rc-row[aria-selected="true"] .t small { color: #FFFFFFAA; }
+.rc-row[aria-selected="true"] .fill { border-color: var(--white); }
+.rc-gap { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 14px; padding: 5px 10px; border: 1.5px dashed var(--ink); font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; }
+.rc-gap:hover { color: var(--ink); background: #0000000d; }
+.rc-gap b { color: var(--ink); }
+.rc-gap + .rc-row, .rc-row + .rc-gap { margin-top: 0; }
+.rc-list .rc-gap { margin-top: 4px; margin-bottom: 4px; }
+.rc-none { padding: 22px 16px; font-weight: 600; color: var(--muted); }
+
+.rc-edit { position: sticky; top: 12px; padding: 14px 16px 16px; }
+.rc-edit .kind { font-style: italic; font-weight: 700; font-size: 12px; }
+.rc-edit .big { font-size: 20px; font-weight: 800; margin: 2px 0 2px; overflow-wrap: anywhere; }
+.rc-edit .path { font-size: 11.5px; font-weight: 600; color: var(--muted); }
+.rc-f { margin-top: 12px; }
+.rc-f > label, .rc-f > .lb { display: block; font-size: 11.5px; font-weight: 700; margin-bottom: 5px; }
+.rc-f select { font: inherit; width: 100%; border: 2px solid var(--ink); border-radius: 0; background: var(--white); padding: 6px 8px; color: var(--ink); }
+.rc-when { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.rc-when input { padding: 6px 7px; font-variant-numeric: tabular-nums; }
+.rc-live { font-weight: 700; padding: 6px 0; }
+.rc-len { font-weight: 700; }
+.rc-len .display { font-size: 22px; margin-right: 4px; }
+.rc-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.rc-chips .chip { font: inherit; font-weight: 700; font-size: 12px; display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px 4px 5px; border: 2px solid var(--ink); background: var(--white); color: var(--ink); cursor: pointer; border-radius: 0; }
+.rc-chips .chip .fill { width: 11px; height: 11px; }
+.rc-chips .chip[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+.rc-chips .chip[aria-pressed="true"] .fill { border-color: var(--white); }
+.rc-save { display: flex; gap: 6px; margin-top: 14px; }
+.rc-save .btn { flex: 1; }
+.rc-warn { margin-top: 10px; font-size: 12px; font-weight: 600; border: 1.5px dashed var(--ink); padding: 7px 9px; }
+.rc-warn:empty { display: none; }
+.rc-more { margin-top: 16px; padding-top: 12px; border-top: var(--hair) solid var(--ink); }
+.rc-split { display: grid; grid-template-columns: 1fr 1fr auto; gap: 6px; }
+.rc-split input { padding: 6px 7px; }
+.rc-split .btn, .rc-more .btn { padding: 6px 10px; font-size: 12px; white-space: nowrap; }
+.rc-err { margin-top: 10px; color: var(--signal); font-weight: 700; font-size: 12px; }
+.rc-err:empty { display: none; }
+.rc-empty { color: var(--muted); font-weight: 600; padding: 18px 2px; }

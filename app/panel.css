@@ -1,0 +1,55 @@
+/* 타이머 화면 — 맥 메뉴 막대 패널(panel.html)과 폰의 타이머 탭이 같이 쓴다. 전부 .tw-timer 안으로 한정 */
+html:has(body.tw-timer), body.tw-timer { height: 100%; overflow: hidden; }
+body.tw-timer { border: var(--line) solid var(--ink); }
+.tw-timer { padding: 12px 14px 10px; display: flex; flex-direction: column; }
+
+.tw-timer .head { text-align: center; margin-bottom: 10px; }
+.tw-timer .head .display { font-size: 46px; margin-top: 5px; }
+
+/* 지금 컷 */
+.tw-timer .now { padding: 9px 12px 11px; position: relative; flex: none; }
+.tw-timer .now .meta { position: absolute; top: 7px; right: 10px; }
+.tw-timer .now .path { font-size: 11px; font-weight: 600; margin-right: 58px; min-height: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tw-timer .now .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.tw-timer .now .name { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tw-timer .now .elapsed { font-size: 32px; flex: none; }
+.tw-timer .now .bottom { display: flex; gap: 6px; margin-top: 8px; align-items: stretch; }
+.tw-timer .now .wt { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; background: var(--white); border: 2px solid var(--ink); padding: 0 7px 0 5px; flex: none; }
+.tw-timer .now .wt .fill { width: 12px; height: 12px; }
+.tw-timer .now .memo { flex: 1; min-width: 0; padding: 5px 7px; border-width: 2px; }
+.tw-timer .now .btn { padding: 5px 10px; flex: none; }
+.tw-timer .now.idle { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.tw-timer .now.idle .meta { position: static; flex: none; }
+.tw-timer .now.idle .hint { font-weight: 600; }
+
+/* 고르기 컷 */
+.tw-timer .pick { padding: 10px 12px 12px; flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.tw-timer .pick .search { padding: 6px 8px; }
+.tw-timer .list { flex: 1; min-height: 0; overflow-y: auto; margin: 8px 0 10px; border-top: var(--hair) solid var(--ink); border-bottom: var(--hair) solid var(--ink); }
+.tw-timer .list .label { font-size: 11px; font-weight: 700; font-style: italic; padding: 7px 4px 3px; }
+.tw-timer .item { display: flex; align-items: center; gap: 7px; padding: 4px 6px; cursor: pointer; }
+.tw-timer .item:hover { background: #0000000d; }
+.tw-timer .item .nm { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tw-timer .item .sub { font-size: 10.5px; color: var(--muted); white-space: nowrap; }
+.tw-timer .item .ly { font-size: 10.5px; font-style: italic; color: var(--muted); flex: none; }
+.tw-timer .item.top .nm { font-weight: 800; }
+.tw-timer .item .sw { width: 11px; height: 11px; flex: none; }
+.tw-timer .item[aria-selected="true"] { background: var(--ink); color: var(--white); }
+.tw-timer .item[aria-selected="true"] .ly, .tw-timer .item[aria-selected="true"] .sub { color: #FFFFFFAA; }
+.tw-timer .item[aria-selected="true"] .fill { border-color: var(--white); }
+.tw-timer .item.recent .go { font-size: 10.5px; font-weight: 800; border: 1.5px solid currentColor; padding: 0 5px; flex: none; }
+.tw-timer .none { padding: 12px 6px; font-weight: 600; color: var(--muted); }
+
+.tw-timer .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.tw-timer .chip { font: inherit; font-weight: 700; font-size: 12px; display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px 4px 5px; border: 2px solid var(--ink); background: var(--white); color: var(--ink); cursor: pointer; border-radius: 0; }
+.tw-timer .chip .fill { width: 11px; height: 11px; }
+.tw-timer .chip[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+.tw-timer .chip[aria-pressed="true"] .fill { border-color: var(--white); }
+.tw-timer .start { width: 100%; margin-top: 10px; padding: 9px; font-size: 14px; }
+.tw-timer .start:disabled { opacity: 1; background: var(--white); color: var(--muted); border-style: dashed; }
+
+.tw-timer .foot { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 9px; }
+.tw-timer .foot .key { font-size: 11px; color: var(--muted); }
+.tw-timer .foot .nav-btns { display: inline-flex; }
+.tw-timer .foot .nav-btns .btn + .btn { border-left: 0; }
+.tw-timer .foot .err { font-size: 11.5px; }
