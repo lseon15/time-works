@@ -49,9 +49,10 @@ export function initStats(app) {
       const dt = new Date(d.dayStart);
       const segs = tops.map((t) => ({ t, ms: d.byTop.get(t.id) || 0 })).filter((x) => x.ms > 0);
       const title = `${dt.getMonth() + 1}월 ${dt.getDate()}일 ${WD[dt.getDay()]} ${fmtHM(d.total)}`;
+      const pct = (d.total / max) * 100;
       return `<div class="dcol" title="${esc(title)}">
-        ${!month && d.total ? `<div class="dval">${fmtHM(d.total)}</div>` : ''}
-        <div class="dbar" style="height:${(d.total / max) * 100}%">${segs.map((x) => `<span class="${fillClass(x.t.fill)}" style="flex:${x.ms}"></span>`).join('')}</div>
+        ${month || !d.total ? '' : `<div class="dval" style="bottom:${pct}%">${fmtHM(d.total)}</div>`}
+        <div class="dbar" style="height:${pct}%">${segs.map((x) => `<span class="${fillClass(x.t.fill)}" style="flex:${x.ms}"></span>`).join('')}</div>
       </div>`;
     }).join('');
     const labs = days.map((d) => {

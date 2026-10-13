@@ -1,6 +1,6 @@
 // 오프라인 캐시 — 빌드(npm run web)가 VERSION 과 FILES 를 채운다.
 // 앱 파일은 캐시에서 먼저 열고(오프라인에서도 열림) 뒤에서 새 버전을 받아 둔다. Supabase 요청은 건드리지 않는다.
-const VERSION = 'tw-07956669797e';
+const VERSION = 'tw-32b7437d1ad4';
 const FILES = [
   "./",
   "./app/base.css",

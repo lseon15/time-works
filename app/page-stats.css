@@ -69,11 +69,13 @@ td.name .pth { font-size: 11px; font-weight: 500; color: var(--muted); margin-le
 tr.ranked td.name { font-weight: 700; }
 
 /* 날짜별 막대 (주간·월간, 합계 컷 안) */
-.days { display: flex; align-items: flex-end; gap: 4px; height: 170px; margin-top: 18px; padding-top: 4px; border-bottom: var(--line) solid var(--white); }
-.days.month { gap: 2px; }
-.dcol { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; }
-.dval { font-size: 11px; font-weight: 700; text-align: center; margin-bottom: 3px; white-space: nowrap; }
-.dbar { display: flex; flex-direction: column-reverse; min-height: 0; }
+/* 숫자는 막대 위에 '띄워서' 올린다 — 같은 줄에 쌓으면 긴 막대가 눌려 높이가 어긋난다.
+   위 여백(padding-top)이 맨 위 막대의 숫자 자리. 월간은 숫자가 없어 여백도 없다. */
+.days { display: flex; align-items: stretch; gap: 4px; height: 170px; margin-top: 18px; padding-top: 21px; border-bottom: var(--line) solid var(--white); }
+.days.month { gap: 2px; padding-top: 4px; }
+.dcol { flex: 1; min-width: 0; position: relative; }
+.dval { position: absolute; left: 0; right: 0; margin-bottom: 3px; font-size: 11px; font-weight: 700; text-align: center; white-space: nowrap; }
+.dbar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column-reverse; }
 .dbar > span { border: 1.5px solid var(--white); border-bottom-width: 0; }
 .dbar > span:first-child { border-bottom-width: 1.5px; }
 .dlabs { display: flex; gap: 4px; margin-top: 5px; }
